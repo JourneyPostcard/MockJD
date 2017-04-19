@@ -1,0 +1,416 @@
+﻿var imgCount;//图片总数
+var intervalImg;//图片轮播句柄
+var timeoutImg;//轮播延缓句柄
+var imgIndex = 1;//起始要换的图片索引
+var intervalScroll;//滚动条滚动句柄
+
+$(function () {
+    window.onscroll = scrolling;
+
+    $('.leftbar li:not(:last-child) a').on('click', scroll);
+
+    document.getElementById('scrolltotop').addEventListener('click', function () {
+        $('body, html').animate({scrollTop: '0'}, 500);
+    });
+
+    $('.leftbar').on('webkitTransitionEnd', function () {
+        if ($(this).css('opacity') === '0') {
+            $(this).css('display', 'none');
+        }
+    });
+
+    //根据滚动条位置初始化显示或加载的栏目
+    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+    showOrHide(scrollTop);
+
+    document.getElementById('closelogin').addEventListener('click', function () {
+        $('.logindiv').hide();
+        $('body, html').css('overflow', '');
+    });
+
+    $('#login, #myaccount').on('click', function () {
+        $('.logindiv').show();
+        $('body, html').css('overflow', 'hidden');
+    });
+
+    imgCount = $('#spotul li').length;
+
+    //自定义换图片事件
+    $('#spotul div').on('fadeImg', function () {
+        imgIndex = $(this).parent('li').index();
+        //$('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
+        $('.adimg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
+        //$('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
+        imgIndex++;
+        imgIndex = adjust(imgIndex);
+        $(this).addClass('hover');
+        $('#spotul div').not(this).removeClass('hover');
+    });
+
+    //鼠标移动到小圆点上时换图片，并暂停图片轮播
+    $('#spotul div').on('mouseover', function () {
+        $(this).trigger('fadeImg');
+        clearInterval(intervalImg);
+    });
+
+    //鼠标移动到图片上时暂停图片轮播
+    $('.adimg').on('mouseover', function () {
+        clearInterval(intervalImg);
+    });
+
+    //鼠标移开小圆点或图片上时重新开启图片轮播
+    $('#spotul div, .adimg').on('mouseleave', function () {
+        //良好的习惯，重新开启间隔前先清除掉正在进行的间隔
+        clearInterval(intervalImg);
+        intervalImg = setInterval(fadeImg, 3000);
+    });
+
+    intervalImg = setInterval(fadeImg, 3000);
+
+    $('.carouseldiv input').on('click', function () {
+        var direction = $(this).hasClass('left') ? 'right' : 'left';
+        if (direction === 'right') {
+            imgIndex = adjust(imgIndex - 2);
+        }
+
+        //点击向左向右时重新计算图片轮播起始时间
+        clearInterval(intervalImg);
+
+        //防止连续多次点击，产生多个setInterval
+        clearTimeout(timeoutImg);
+
+        //MoveImg(direction);
+        fadeImg();
+
+        //并使第一次的轮播间隔加长
+        timeoutImg = setTimeout(function () {
+            clearInterval(intervalImg);
+            intervalImg = setInterval(fadeImg, 3000);
+        }, 2000);
+    });
+
+    //关闭顶部广告
+    $('.topad').on('webkitTransitionEnd', function () {
+        $(this).remove();
+    });
+
+    document.getElementById('closead').addEventListener('click', function () {
+        $('.topad').css('opacity', '0');
+    });
+
+    var listener;
+    //判断浏览器是否支持某事件
+    if('onmouseenter' in window)
+        listener = 'mouseenter';
+    else
+        listener = 'mouseover';
+
+    //mouseenter：只有在鼠标进入时触发（低版本浏览器不支持）
+    document.getElementById('mycart').addEventListener(listener, requestCart);
+});
+
+//请求购物车
+function requestCart() {
+    var dropDownCart = document.getElementById('dropdowncart');
+    dropDownCart.innerHTML = '';
+    $(dropDownCart).addClass('lazyload');
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://www.google.com',
+        //url: 'test.txt',
+        data: {username: '123', password: '456'},
+        timeout: 3000,
+        success: function (data) {
+            dropDownCart.innerHTML = data;
+        },
+        error: function () {
+            dropDownCart.innerHTML = '购物车中还没有商品，赶紧选购吧！';
+        },
+        complete: function () {
+            $(dropDownCart).removeClass('lazyload');
+        }
+    });
+}
+
+//滚动到特定位置
+function scroll() {
+    var index = $(this).parent().index();
+    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+    //可以直接设置scrollTop控制滚动条
+    intervalScroll = setInterval(function () {
+        //一定要是闭区间，不让滚动条的位置在边界上
+        if (scrollTop >= 1300 + index * 100) {
+            scrollTop = scrollTop - 20;
+            window.scrollTo(0, scrollTop);
+        }
+        else if (scrollTop <= 1200 + index * 100) {
+            scrollTop = scrollTop + 20;
+            window.scrollTo(0, scrollTop);
+        }
+        else {
+            clearInterval(intervalScroll);
+        }
+    }, 1);
+}
+
+//滚动条滚动相关显示/隐藏
+function scrolling() {
+    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+    showOrHide(scrollTop);
+
+    //左侧导航栏随滚动条滚动样式
+    for (var i = 0; i < 10; i++) {
+        var start = 1200 + i * 100;
+        var end = start + 100;
+        if (scrollTop > start && scrollTop < end) {
+            //清楚动态样式，使静态样式生效
+            $('.leftbar li').not(':last-child').css({'background-color': '', 'border-top': ''});
+            $('.leftbar li').not(':last-child').next().css('border-top', '');
+
+            $('.leftbar li:eq(' + i + ')').css({'background-color': '#d70b1c', 'border-top': '1px solid #d70b1c'});
+            $('.leftbar li:eq(' + i + ')').next().css('border-top', '1px solid #d70b1c');
+            break;
+        }
+    }
+}
+
+function showOrHide(scrollTop) {
+    //显示/隐藏搜索栏
+    if (scrollTop > 700) {
+        $('.searchbar').css('top', '0');
+    }
+    else {
+        $('.searchbar').css('top', '-50px');
+    }
+
+    //显示/隐藏左侧导航栏
+    if (scrollTop > 1200) {
+        $('.leftbar').css('display', 'block');
+        //防止连续滚动造成的过渡消失
+        if ($('.leftbar').css('opacity') !== '1') {
+            $('.leftbar').css('opacity', '1');
+        }
+    }
+    else {
+        //if ($('.LeftBar').css('opacity') === '1')
+        $('.leftbar').css('opacity', '0');
+    }
+
+    //京东秒杀的懒加载
+    if (scrollTop > 160 && $('.kill').attr('loaded') === 'no') {
+        $('.kill').attr('loaded', 'yes');
+        $.ajax({
+            type: 'GET',
+            url: 'kill.html',
+            data: {},
+            timeout: 3000,
+            /*beforeSend: function(request) {
+             request.setRequestHeader('Origin', 'http://localhost:63342');
+             },*/
+            success: function (data) {
+                $('.kill').removeClass('lazyload2');
+                $('.kill').html(data);
+                //图片的懒加载
+                $('.kill img').each(function () {
+                    $(this).attr('src', $(this).attr('data-lazy-img'));
+                });
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+    //发现好货一栏的懒加载
+    if (scrollTop > 500 && $('.threecolumnul').attr('loaded') === 'no') {
+        $('.threecolumnul').attr('loaded', 'yes');
+        $.ajax({
+            type: 'GET',
+            url: 'threecolumnui.html',
+            data: {},
+            timeout: 3000,
+            success: function (data) {
+                $('.threecolumnul').removeClass('lazyload2');
+                $('.threecolumnul').html(data);
+                $('.threecolumnul img').each(function () {
+                    $(this).attr('src', $(this).attr('data-lazy-img'));
+                });
+
+                //初始滑动标签处的宽度
+                var width_a = $('.middlediv').width() / 5;
+                /*$('.MiddleDiv a').width(width_a);
+                 $('.MiddleDiv a').css('box-sizing', 'border-box');
+                 $('.MiddleDiv i').width(width_a - 16);*/
+
+                //滑动标签
+                $('#sliderul li').on('mouseover', function () {
+                    $('#sliderul i').css('left', (8 + width_a * $(this).index()) + 'px');
+                    $('#sliderul ol').hide();
+                    $('#sliderul ol:eq(' + $(this).index() + ')').show();
+                });
+            }
+        });
+    }
+
+    //3C一栏的懒加载
+    if (scrollTop > 1100 && $('.twocolumnul').attr('loaded') === 'no') {
+        $('.twocolumnul').attr('loaded', 'yes');
+        $.ajax({
+            type: 'GET',
+            url: 'twocolumnui.html',
+            data: {},
+            timeout: 3000,
+            success: function (data) {
+                $('.twocolumnul').removeClass('lazyload2');
+                $('.twocolumnul').html(data);
+                $('.twocolumnul img').each(function () {
+                    $(this).attr('src', $(this).attr('data-lazy-img'));
+                });
+
+                //图片滚动
+                $('.scrollimg').attr('state', '012');
+
+                $('.leftbtn').on('click', function () {
+                    var scrollImg = $(this).parent('.scrollimg');
+                    if (scrollImg.attr('isFinished') != 1 && scrollImg.attr('isFinished') != undefined) {
+                        return;
+                    }
+
+                    if (scrollImg.attr('state') === '012') {
+                        scrollImg.attr('state', '120');
+                    }
+                    else if (scrollImg.attr('state') === '120') {
+                        scrollImg.attr('state', '021');
+                        scrollImg.find('a:lt(6)').css('right', '-100%');
+                        scrollImg.find('a:gt(5)').css('right', '100%');
+                        scrollImg.attr('state', '210');
+                    }
+                    else if (scrollImg.attr('state') === '210') {
+                        scrollImg.attr('state', '012');
+                        scrollImg.find('a').css('right', '0');
+                        scrollImg.attr('state', '120');
+                    }
+                    else if (scrollImg.attr('state') === '021') {
+                        scrollImg.attr('state', '210');
+                    }
+                    scrollImg.find('a').css('-webkit-animation', 'scroll-img-left .6s');
+                    scrollImg.attr('isFinished', 0);
+                });
+
+                $('.rightbtn').on('click', function () {
+                    var scrollImg = $(this).parent('.scrollimg');
+                    if (scrollImg.attr('isFinished') != 1 && scrollImg.attr('isFinished') != undefined) {
+                        return;
+                    }
+
+                    if (scrollImg.attr('state') === '012') {
+                        scrollImg.attr('state', '210');
+                        scrollImg.find('a:lt(6)').css('right', '0');
+                        scrollImg.find('a:gt(5)').css('right', '200%');
+                        scrollImg.attr('state', '021');
+                    }
+                    else if (scrollImg.attr('state') === '120') {
+                        scrollImg.attr('state', '012');
+                    }
+                    else if (scrollImg.attr('state') === '210') {
+                        scrollImg.attr('state', '021');
+                    }
+                    else if (scrollImg.attr('state') === '021') {
+                        scrollImg.attr('state', '120');
+                        scrollImg.find('a').css('right', '100%');
+                        scrollImg.attr('state', '012');
+                    }
+                    scrollImg.find('a').css('-webkit-animation', 'scroll-img-right .6s');
+                    scrollImg.attr('isFinished', 0);
+                });
+
+                $('.scrollimg a:last-child').on('webkitAnimationEnd', function () {
+                    var scrollImg = $(this).parent('div').parent('.scrollimg');
+                    var all_a = $(this).parent().children('a');
+
+                    all_a.css('-webkit-animation', '');
+                    if (scrollImg.attr('state') === '012') {
+                        all_a.css('right', '0');
+                    }
+                    else if (scrollImg.attr('state') === '120') {
+                        all_a.css('right', '100%');
+                    }
+                    else if (scrollImg.attr('state') === '210') {
+                        scrollImg.find('a:lt(6)').css('right', '0');
+                        scrollImg.find('a:gt(5)').css('right', '200%');
+                    }
+                    else if (scrollImg.attr('state') === '021') {
+                        scrollImg.find('a:lt(6)').css('right', '-100%');
+                        scrollImg.find('a:gt(5)').css('right', '100%');
+                    }
+
+                    scrollImg.attr('isFinished', 1);
+                });
+            }
+        });
+    }
+}
+
+function fadeImg() {
+    //测试代码段的执行时间，参数任意，但起始的参数必须相同
+    //console.time('test');
+    $('#spotul div:eq(' + imgIndex + ')').trigger('fadeImg');
+    //console.timeEnd('test');
+    //自动累加执行的次数
+    //console.count('第N次执行FadeImg');
+}
+
+//滑动图片，有问题
+//function MoveImg(direction) {
+//    if (direction === 'right') {
+//        $('.AdImg').css('right', '-100%');
+//        $('.PreImg').css('right', '0');
+
+//        $('.PreImg').on('webkitTransitionEnd', function () {
+//            $('.NextImg').remove();
+//            $('.AdImg').attr('class', 'NextImg');
+//            $('.PreImg').attr('class', 'AdImg');
+//            $('.AdImg').before('<img class="PreImg" src="" />');
+
+//            $('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
+//            $('.AdImg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
+//            $('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
+//        });
+//    }
+//    else {
+//        $('.AdImg').css('right', '100%');
+//        $('.NextImg').css('right', '0');
+
+//        $('.NextImg').on('webkitTransitionEnd', function () {
+//            $('.PreImg').remove();
+//            $('.AdImg').attr('class', 'PreImg');
+//            $('.NextImg').attr('class', 'AdImg');
+//            $('.AdImg').after('<img class="NextImg" src="" />');
+
+//            $('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
+//            $('.AdImg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
+//            $('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
+//        });
+//    }
+
+//}
+
+/**
+ *该函数用循环取余的方式将任何数字调节为0~图片数量-1之间的数字
+ * @param number 要调节的数字
+ * @returns {*} 调节后的数字
+ */
+function adjust(number) {
+    var result;
+    if (number > 0) {
+        result = number % imgCount;
+    }
+    else {
+        for (; number < 0;) {
+            number = number + imgCount;
+        }
+        result = number;
+    }
+    return result;
+}

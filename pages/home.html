@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Keywords" content="网上购物,网上商城,手机,笔记本,电脑,MP3,CD,VCD,DV,相机,数码,配件,手表,存储卡,京东">
+    <meta name="Description"
+          content="京东JD.COM-专业的综合网上购物商城,销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品.便捷、诚信的服务，为您提供愉悦的网上购物体验!">
+    <meta name="Renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>模拟京东</title>
+    <link href="../styles/home.css" rel="stylesheet"/>
+    <script src="../scripts/jquery-3.1.1.min.js"></script>
+    <script src="../scripts/home.js"></script>
+</head>
+<body class="body">
+
+<div class="searchbar">
+    <div>
+        <a></a>
+    </div>
+    <p>
+        <span>
+            <input type="text" placeholder="取暖器" onfocus="this.placeholder='';" onblur="this.placeholder='取暖器';"/>
+            <input class="iconfont" type="button" value="&#xe6a4;"/>
+        </span>
+    </p>
+</div>
+
+<ul class="leftbar">
+    <li><a>享品质</a></li>
+    <li><a>服饰美容</a></li>
+    <li><a>家电手机</a></li>
+    <li><a>电脑数码</a></li>
+    <li><a>3C运动</a></li>
+    <li><a>爱吃</a></li>
+    <li><a>母婴家居</a></li>
+    <li><a>图书汽车</a></li>
+    <li><a>虚拟</a></li>
+    <li><a>还没逛够</a></li>
+    <li><a id="scrolltotop">顶部</a></li>
+</ul>
+
+<ul class="rightbarui">
+    <li id="myaccount">
+        <i></i>
+        <div>京东会员</div>
+    </li>
+    <li>
+        <i></i>
+        <div>购物车</div>
+    </li>
+    <li>
+        <i></i>
+        <div>我的关注</div>
+    </li>
+    <li>
+        <i></i>
+        <div>我的足迹</div>
+    </li>
+    <li>
+        <i></i>
+        <div>我的消息</div>
+    </li>
+    <li>
+        <i></i>
+        <div>咨询JIMI</div>
+    </li>
+    <li class="last2thli">
+        <a href="#">
+            <i></i>
+            <div>顶部</div>
+        </a>
+    </li>
+    <li class="lastli">
+        <i></i>
+        <div>反馈</div>
+    </li>
+</ul>
+
+<div class="topad">
+    <a id="closead"></a>
+</div>
+
+<div class="topbar">
+    <div>
+        <span>
+            <div class="locationdiv">
+                <i></i>
+                <em>深圳</em>
+                <b>✪</b>
+            </div>
+            <ul class="listui">
+                <li><a>深圳</a></li><li><a>省名2</a></li><li><a>省名3</a></li><li><a
+            >省名4</a></li><li><a>省名5</a></li><li><a>省名6</a></li><li><a>省名7</a></li><li><a
+            >省名8</a></li><li><a>省名9</a></li><li><a>省名10</a></li><li><a
+            >省名11</a></li><li><a>省名12</a></li><li><a>省名13</a></li><li><a
+            >省名14</a></li><li><a>省名15</a></li><li><a>省名16</a></li><li><a
+            >省名17</a></li><li><a>省名18</a></li><li><a>省名19</a></li><li><a
+            >省名20</a></li><li><a>省名21</a></li><li><a>省名22</a></li><li><a
+            >省名23</a></li><li><a>省名24</a></li><li><a>省名25</a></li><li><a
+            >省名26</a></li><li><a>省名27</a></li><li><a>省名28</a></li><li><a
+            >省名29</a></li><li><a>省名30</a></li><li><a>省名31</a></li><li><a
+            >省名32</a></li><li><a>省名33</a></li><li><a>省名34</a></li><li><a
+            >省名35</a></li>
+            </ul>
+        </span>
+        <ul>
+            <li>
+                <div><a id="login">你好，请登录</a> <a>免费注册</a></div>
+            </li>
+            <li>
+                <div><a>我的订单</a></div>
+            </li>
+            <li class="dropdownli">
+                <div class="showndiv"><a>我的京东</a></div>
+                <div class="hiddendiv hiddenwidth">
+                    <ul>
+                        <li><a>待处理订单</a></li>
+                        <li><a>消息</a></li>
+                        <li><a>返修退换货</a></li>
+                        <li><a>我的问答</a></li>
+                        <li><a>降价商品</a></li>
+                        <li><a>我的关注</a></li>
+                    </ul>
+                    <ul>
+                        <li><a>我的京豆</a></li>
+                        <li><a>我的优惠券</a></li>
+                        <li><a>我的白条</a></li>
+                        <li><a>我的理财</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <div><a>京东会员</a></div>
+            </li>
+            <li>
+                <div><a>企业采购</a></div>
+            </li>
+            <li class="dropdownli">
+                <div class="showndiv"><a>客户服务</a></div>
+                <div class="hiddendiv hiddenwidth2">
+                    <ul>
+                        <li class="sumli"><b>客户</b></li>
+                        <li><a>帮助中心</a></li>
+                        <li><a>售后服务</a></li>
+                        <li><a>在线客服</a></li>
+                        <li><a>意见建议</a></li>
+                        <li><a>电话客服</a></li>
+                        <li><a>客服邮箱</a></li>
+                        <li><a>金融咨询</a></li>
+                    </ul>
+                    <ul>
+                        <li class="sumli"><b>商户</b></li>
+                        <li><a>京东商学院</a></li>
+                        <li><a>商家入驻</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <div><a>网站导航</a></div>
+            </li>
+            <li class="dimension2li" id="dimension2">
+                <div><a>手机京东</a></div>
+                <i></i>
+                <ul>
+                    <li>
+                        <img src="//img10.360buyimg.com/da/jfs/t3430/302/575207781/9579/340095b8/580de978Nd0f427b4.png"
+                             alt="">
+                        <span>
+                            <b>手机京东</b>
+                            <em>新人专享188元大礼包</em>
+                            <a class="iphone"></a>
+                            <a class="android"></a>
+                            <a class="ipad"></a>
+                        </span>
+                    </li>
+                    <li>
+                        <img src="//img10.360buyimg.com/da/jfs/t3454/251/563328726/8142/39afa4b2/580de97eN3740c741.png"
+                             alt="">
+                        <span>
+                            <b>关注京东微信</b>
+                            <em>微信扫一扫关注新粉最高180元惊喜礼包</em>
+                        </span>
+                    </li>
+                    <li>
+                        <img src="//img11.360buyimg.com/da/jfs/t3631/247/716089685/32146/d7369864/5811d383N0e590395.png"
+                             alt="">
+                        <span>
+                            <b>京东金融客户端</b>
+                            <em>扫一扫 让赚钱再轻松一点</em>
+                            <a class="iphone"></a>
+                            <a class="android"></a>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="top2">
+    <a href="" class="doga"></a>
+    <div class="top2-1">
+        <span>
+            <input type="text" placeholder="把年货带回家" onfocus="this.placeholder='';" onblur="this.placeholder='把年货带回家';">
+            <a class="iconfont">&#xe6a4;</a>
+            <div id="mycart">
+                <div>
+                    <i class="iconfont">&#xe611;</i>
+                    <span>我的购物车</span>
+                    <a>0</a>
+                </div>
+                <div id="dropdowncart"></div>
+            </div>
+        </span>
+        <ul>
+            <li>单单立减</li>
+            <li>抢亿元红包</li>
+            <li>农用物资</li>
+            <li>买3免1</li>
+            <li>低至5折</li>
+            <li>牛仔外套女</li>
+            <li>机油</li>
+            <li>9.9爆款</li>
+            <li>探路者</li>
+        </ul>
+        <ol>
+            <li><a>秒杀</a></li>
+            <li><a>优惠券</a></li>
+            <li><a>闪购</a><b>3周年</b></li>
+            <li><a>拍卖</a></li>
+            <li><a>服装城</a></li>
+            <li><a>京东超市</a></li>
+            <li><a>生鲜</a></li>
+            <li><a>全球购</a></li>
+            <li><a>京东金融</a></li>
+        </ol>
+    </div>
+    <div class="top2-2">
+        <ul class="top2-2-1">
+            <li>
+                <ul>
+                    <li><a>家用电器</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>手机</a></li>
+                    <li><a>运营商</a></li>
+                    <li><a>数码</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>电脑办公</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>家居</a></li>
+                    <li><a>家具</a></li>
+                    <li><a>家装</a></li>
+                    <li><a>厨具</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>男装</a></li>
+                    <li><a>女装</a></li>
+                    <li><a>童装</a></li>
+                    <li><a>内衣</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>个护化妆</a></li>
+                    <li><a>清洁用品</a></li>
+                    <li><a>宠物</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>鞋靴</a></li>
+                    <li><a>箱包</a></li>
+                    <li><a>珠宝</a></li>
+                    <li><a>奢侈品</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>运动</a></li>
+                    <li><a>户外</a></li>
+                    <li><a>钟表</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>汽车</a></li>
+                    <li><a>汽车用品</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>母婴</a></li>
+                    <li><a>玩具乐器</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>食品</a></li>
+                    <li><a>酒类</a></li>
+                    <li><a>生鲜</a></li>
+                    <li><a>特产</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>医药保健</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>图书</a></li>
+                    <li><a>音响</a></li>
+                    <li><a>电子书</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>机票</a></li>
+                    <li><a>酒店</a></li>
+                    <li><a>旅游</a></li>
+                    <li><a>生活</a></li>
+                    <div></div>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a>理财</a></li>
+                    <li><a>众筹</a></li>
+                    <li><a>白条</a></li>
+                    <li><a>保险</a></li>
+                    <div></div>
+                </ul>
+            </li>
+        </ul>
+        <div class="top2-2-2">
+            <div class="carouseldiv">
+                <a>
+                    <!--<img class="PreImg" src=""/>-->
+                    <span class="adimg"/>
+                    <!--<img class="NextImg" src=""/>-->
+                </a>
+                <input class="left" type="button" value="<"/>
+                <input class="right" type="button" value=">"/>
+                <ul id="spotul">
+                    <li>
+                        <div class="hover"></div>
+                    </li>
+                    <li>
+                        <div></div>
+                    </li>
+                    <li>
+                        <div></div>
+                    </li>
+                    <li>
+                        <div></div>
+                    </li>
+                    <li>
+                        <div></div>
+                    </li>
+                    <li>
+                        <div></div>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="Clear"></div>-->
+            <span href="https://baidu.com"><img
+                    src="//img12.360buyimg.com/cms/s390x130_jfs/t3223/281/4709999034/39160/5c656659/585387c0N6a8b6ce4.jpg!q90"></span>
+            <span href="https://baidu.com"><img
+                    src="//img10.360buyimg.com/cms/s390x130_jfs/t3967/360/885623595/17826/bc4200cf/5860dd87Nbecaae02.jpg!q90"></span>
+        </div>
+        <div class="top2-2-3"></div>
+
+    </div>
+</div>
+
+<div class="kill lazyload2" loaded="no"></div>
+
+<div class="splitline">
+    <span>爱生活</span>
+</div>
+
+<ul class="threecolumnul lazyload2" loaded="no"></ul>
+
+<div class="splitline2">
+    <span>还没逛够</span>
+</div>
+
+<ul class="twocolumnul lazyload2" loaded="no" id="twocolumn"></ul>
+
+<div class="splitline">
+    <span>美好人生</span>
+</div>
+
+<div class="three">
+    <div>
+        <a href="">
+            <img src="//img30.360buyimg.com/da/jfs/t3112/252/5374171923/22702/3c79c4d6/586c9ffeN14ed5572.jpg!q90"></a>
+        <a href="">
+            <img src="//img1.360buyimg.com/da/jfs/t4003/229/1029406205/9893/ebe0711d/58663a7eN53b5933d.jpg!q90"></a>
+        <a href="">
+            <img src="//img12.360buyimg.com/da/jfs/t3208/225/4741656758/19804/547b2ca4/58522b1bN916da74b.jpg!q90"></a>
+    </div>
+</div>
+
+<footer class="bottom">
+    <div>
+        <ul class="firstul">
+            <li>品类齐全，轻松购物</li>
+            <li>多仓直发，极速配送</li>
+            <li>正品行货，精致服务</li>
+            <li>天天低价，畅选无忧</li>
+        </ul>
+        <ol>
+            <li><b>购物指南</b>
+                <ul>
+                    <li><a>购物流程</a></li>
+                    <li><a>会员介绍</a></li>
+                    <li><a>生活旅行</a></li>
+                    <li><a>常见问题</a></li>
+                    <li><a>大家电</a></li>
+                    <li><a>联系客服</a></li>
+                </ul>
+            </li>
+            <li><b>配送方式</b>
+                <ul>
+                    <li><a>上门自提</a></li>
+                    <li><a>211限时达</a></li>
+                    <li><a>配送服务查询</a></li>
+                    <li><a>配送费收取标准</a></li>
+                    <li><a>海外配送</a></li>
+                </ul>
+            </li>
+            <li><b>支付方式</b>
+                <ul>
+                    <li><a>货到付款</a></li>
+                    <li><a>在线支付</a></li>
+                    <li><a>分期付款</a></li>
+                    <li><a>邮局汇款</a></li>
+                    <li><a>公司转账</a></li>
+                </ul>
+            </li>
+            <li><b>售后服务</b>
+                <ul>
+                    <li><a>售后政策</a></li>
+                    <li><a>价格保护</a></li>
+                    <li><a>退款说明</a></li>
+                    <li><a>返修/退换货</a></li>
+                    <li><a>取消订单</a></li>
+                </ul>
+            </li>
+            <li><b>特色服务</b>
+                <ul>
+                    <li><a>夺宝岛</a></li>
+                    <li><a>DIY装机</a></li>
+                    <li><a>延保服务</a></li>
+                    <li><a>京东E卡</a></li>
+                    <li><a>京东通信</a></li>
+                    <li><a>京东JD+</a></li>
+                </ul>
+            </li>
+            <li><b>京东自营覆盖区县</b>
+                <div><p>京东已向全国2661个区县提供自营配送服务，支持货到付款、POS机刷卡和售后上门服务。</p></div>
+                <div><span>查看详情 ></span></div>
+            </li>
+        </ol>
+        <ul>
+            <li>关于我们</li>
+            <li>联系我们</li>
+            <li>联系客服</li>
+            <li>商家入驻</li>
+            <li>营销中心</li>
+            <li>手机京东</li>
+            <li>友情链接</li>
+            <li>销售联盟</li>
+            <li>京东社区</li>
+            <li>风险监测</li>
+            <li>隐私政策</li>
+            <li>京东公益</li>
+            <li>English Site</li>
+            <li>Contact Us</li>
+        </ul>
+        <ul>
+            <li>京公网安备 11000002000088号</li>
+            <li>京ICP证070359号</li>
+            <li>互联网药品信息服务资格证编号(京)-经营性-2014-0008</li>
+            <li>新出发京零 字第大120007号</li>
+        </ul>
+        <ul>
+            <li>互联网出版许可证编号新出网证(京)字150号</li>
+            <li>出版物经营许可证</li>
+            <li>网络文化经营许可证京网文[2014]2148-348号</li>
+            <li>违法和不良信息举报电话：4006561155</li>
+        </ul>
+        <ul>
+            <li>Copyright © 2004 - 2017 京东JD.com 版权所有</li>
+            <li>消费者维权热线：4006067733</li>
+            <li>经营证照</li>
+        </ul>
+        <ul>
+            <li>京东旗下网站：京东钱包</li>
+            <li>京东云</li>
+        </ul>
+        <ul>
+            <li>经营性网站备案中心</li>
+            <li>可信网站信用评估</li>
+            <li>网络警察提醒你</li>
+            <li>诚信网站</li>
+            <li>中国互联网举报中心</li>
+            <li>网络举报APP下载</li>
+        </ul>
+    </div>
+</footer>
+
+<div class="logindiv">
+    <div>
+        <p><span>您尚未登录</span><b id="closelogin">╳</b></p>
+        <div>
+            <b>扫码登录</b><b>账户登录</b>
+            <div>
+                <div><img src="../images/other/Loginmention.png" alt=""></div>
+                <span>打开</span><a href="">手机京东</a><span>扫描二维码</span>
+                <ul>
+                    <li>免输入</li>
+                    <li>更快</li>
+                    <li>更安全</li>
+                </ul>
+                <p><a href="">QQ</a><a href="">微信</a><a href="">立即注册</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="LineHeightTest">
+    <div class="outer">
+        <div class="test">ABCabc/div</div>
+    </div>
+    <div class="outer">
+        <span class="test2">ABCabc/span</span>
+    </div>
+</div>
+
+<span class="LineHeightTest2">
+            123456
+<a>OUTABCDEFGHIGKLMNOPQRSTUVWXYZ</a>
+            <a>ABCabc</a>
+        </span>
+
+<span class="VerticalTest">
+            ABEslg123你好
+            <img src="../images/mobiledevice/iphone.png">
+            <a>ABEslg123你好</a>
+            <input type="text" value="ABEslg123你好"/>
+            <div></div>
+        </span>-->
+
+<!--<div id="MyDIV"></div>-->
+
+</body>
+</html>
