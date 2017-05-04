@@ -1830,13 +1830,16 @@ select,input,img/*,em,b,u,i*/
     border-top: 1px solid #d70b1c;
 }
 
-/*display:table-cell; vertical-align:middle;（一起使用，实现多行文本垂直居中）*/
 .leftbar a {
-    display: table-cell;
+    /*display: table-cell;
     vertical-align: middle;
     padding: 10px 5px;
     cursor: pointer;
-    line-height: 16px;
+    line-height: 16px;*/
+
+    display: block;
+    padding: 10px 5px;
+    cursor: pointer;
 }
 
 .kill {
@@ -2443,7 +2446,7 @@ select,input,img/*,em,b,u,i*/
     background: url(//misc.360buyimg.com/user/passport/1.0.0/widget/login-form-2016-1124/i/pwd-icons-new.png) -104px -75px no-repeat;
 }
 
-/*根据浏览器宽度（包括浏览器滚动条）来判断，不是html的宽度。当html宽度为1190时，浏览器宽度为1207*/
+/*根据浏览器宽度（包括浏览器滚动条，拖动浏览器边界时可以看到）来判断，不是html的宽度。当html宽度为1190时，浏览器宽度为1207*/
 @media (max-width: 1207px) {
     .searchbar div {
         width:990px;
@@ -2620,7 +2623,7 @@ select,input,img/*,em,b,u,i*/
     margin: 10px 0;
     color: #fff;
     height: 50px;
-    line-height: 40px;
+    line-height: 45px;
 }
 
 .LineHeightTest .test {
@@ -2649,28 +2652,32 @@ select,input,img/*,em,b,u,i*/
     font-size: 12px;
 }
 
-.LineHeightTest2 a:first-child {
+.LineHeightTest2 a:first-of-type {
     /* display: inline-block; */
     /* height: 100%; */
     font-size: 20px;
     line-height: 30px;
 }
 
-.LineHeightTest2 a:nth-child(2) {
+.LineHeightTest2 a:nth-of-type(2) {
     font-size: 30px;
     line-height: 30px;
 }
 
 .VerticalTest {
-    /*display:table;*/
-    display: block;
-    font-size: 50px;
+    display:table;
+    /*display: block;*/
     margin: 0 auto;
     /*height:30px; line-height:30px;*/
     border: 1px solid green;
     background-color: yellow;
     position: relative;
     z-index: 2;
+}
+
+.VerticalTest span{
+    font-size: 50px;
+    vertical-align:middle;
 }
 
 .VerticalTest input {
@@ -2680,7 +2687,7 @@ select,input,img/*,em,b,u,i*/
     /*border:1px solid red;*/
     background-color: #fff;
     font-family: asd;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 
 .VerticalTest a {
@@ -2688,7 +2695,7 @@ select,input,img/*,em,b,u,i*/
     font-size: 25px;
     color: #fff;
     background-color: red;
-    vertical-align: middle;
+    vertical-align: baseline;
 }
 
 .VerticalTest div {
