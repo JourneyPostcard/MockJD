@@ -88,7 +88,7 @@ $(function () {
     });
 
     //关闭顶部广告（jquery版）
-    $('#closead').click(function () {
+    $('#closead').on('click', function () {
         $('.topad').fadeOut();
     });
 
@@ -254,87 +254,51 @@ function showOrHide(scrollTop) {
                 });
 
                 //图片滚动
-                $('.scrollimg').attr('state', '012');
-
-                $('.leftbtn').on('click', function () {
-                    var scrollImg = $(this).parent('.scrollimg');
-                    if (scrollImg.attr('isFinished') != 1 && scrollImg.attr('isFinished') != undefined) {
-                        return;
-                    }
-
-                    if (scrollImg.attr('state') === '012') {
-                        scrollImg.attr('state', '120');
-                    }
-                    else if (scrollImg.attr('state') === '120') {
-                        scrollImg.attr('state', '021');
-                        scrollImg.find('a:lt(6)').css('right', '-100%');
-                        scrollImg.find('a:gt(5)').css('right', '100%');
-                        scrollImg.attr('state', '210');
-                    }
-                    else if (scrollImg.attr('state') === '210') {
-                        scrollImg.attr('state', '012');
-                        scrollImg.find('a').css('right', '0');
-                        scrollImg.attr('state', '120');
-                    }
-                    else if (scrollImg.attr('state') === '021') {
-                        scrollImg.attr('state', '210');
-                    }
-                    scrollImg.find('a').css('-webkit-animation', 'scroll-img-left .6s');
-                    scrollImg.attr('isFinished', 0);
-                });
-
-                $('.rightbtn').on('click', function () {
-                    var scrollImg = $(this).parent('.scrollimg');
-                    if (scrollImg.attr('isFinished') != 1 && scrollImg.attr('isFinished') != undefined) {
-                        return;
-                    }
-
-                    if (scrollImg.attr('state') === '012') {
-                        scrollImg.attr('state', '210');
-                        scrollImg.find('a:lt(6)').css('right', '0');
-                        scrollImg.find('a:gt(5)').css('right', '200%');
-                        scrollImg.attr('state', '021');
-                    }
-                    else if (scrollImg.attr('state') === '120') {
-                        scrollImg.attr('state', '012');
-                    }
-                    else if (scrollImg.attr('state') === '210') {
-                        scrollImg.attr('state', '021');
-                    }
-                    else if (scrollImg.attr('state') === '021') {
-                        scrollImg.attr('state', '120');
-                        scrollImg.find('a').css('right', '100%');
-                        scrollImg.attr('state', '012');
-                    }
-                    scrollImg.find('a').css('-webkit-animation', 'scroll-img-right .6s');
-                    scrollImg.attr('isFinished', 0);
-                });
-
-                $('.scrollimg a:last-child').on('webkitAnimationEnd', function () {
-                    var scrollImg = $(this).parent('div').parent('.scrollimg');
-                    var all_a = $(this).parent().children('a');
-
-                    all_a.css('-webkit-animation', '');
-                    if (scrollImg.attr('state') === '012') {
-                        all_a.css('right', '0');
-                    }
-                    else if (scrollImg.attr('state') === '120') {
-                        all_a.css('right', '100%');
-                    }
-                    else if (scrollImg.attr('state') === '210') {
-                        scrollImg.find('a:lt(6)').css('right', '0');
-                        scrollImg.find('a:gt(5)').css('right', '200%');
-                    }
-                    else if (scrollImg.attr('state') === '021') {
-                        scrollImg.find('a:lt(6)').css('right', '-100%');
-                        scrollImg.find('a:gt(5)').css('right', '100%');
-                    }
-
-                    scrollImg.attr('isFinished', 1);
-                });
+                slideImg();
             }
         });
     }
+}
+
+function slideImg() {
+    //复制一份滚动队列
+    $('.scrollimg p').each(function () {
+        $(this).append($(this).html());
+    });
+
+    $('.leftbtn').on('click', function () {
+        //相对值计算时包括静态样式
+        var p = $(this).parent().find('p');
+        //使用jquery队列动画，一个执行完后紧接着执行另一个
+        p.animate({left: '-=600px'}, 500);
+        p.animate({left: '+=30px'}, 100, function () {
+            var part1 = $(this).find('a:lt(6)');
+            $(this).find('a:last').addClass('tmpclass');
+
+            /*//方法一：after，但必须clone，且添加完后remove
+             $('.tmpclass').after(part1.clone());
+             part1.remove();*/
+
+            //方法二：insertAfter，直接移动
+            part1.insertAfter('.tmpclass');
+
+            $('.tmpclass').removeClass('tmpclass');
+            $(this).css('left', '-570px');
+        });
+    });
+
+    $('.rightbtn').on('click', function () {
+        //相对值计算时包括静态样式
+        var p = $(this).parent().find('p');
+        p.animate({left: '+=600px'}, 500);
+        p.animate({left: '-=30px'}, 100, function () {
+            var part1 = $(this).find('a:gt(17)');
+            $(this).find('a:first').addClass('tmpclass');
+            part1.insertBefore('.tmpclass');
+            $('.tmpclass').removeClass('tmpclass');
+            $(this).css('left', '-570px');
+        });
+    });
 }
 
 function fadeImg() {
