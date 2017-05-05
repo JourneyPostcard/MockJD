@@ -9,7 +9,7 @@ $(function () {
 
     $('.leftbar li:not(:last-child) a').on('click', scroll);
 
-    document.getElementById('scrolltotop').addEventListener('click', function () {
+    $('#scrolltotop').on('click', function () {
         $('body, html').animate({scrollTop: '0'}, 500);
     });
 
@@ -23,7 +23,7 @@ $(function () {
     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
     showOrHide(scrollTop);
 
-    document.getElementById('closelogin').addEventListener('click', function () {
+    $('#closelogin').on('click', function () {
         $('.logindiv').hide();
         $('body, html').css('overflow', '');
     });
@@ -38,9 +38,7 @@ $(function () {
     //自定义换图片事件
     $('#spotul div').on('fadeImg', function () {
         imgIndex = $(this).parent('li').index();
-        //$('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
         $('.adimg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
-        //$('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
         imgIndex++;
         imgIndex = adjust(imgIndex);
         $(this).addClass('hover');
@@ -89,46 +87,43 @@ $(function () {
         }, 2000);
     });
 
-    //关闭顶部广告
-    $('.topad').on('webkitTransitionEnd', function () {
-        $(this).remove();
-    });
-
-    document.getElementById('closead').addEventListener('click', function () {
-        $('.topad').css('opacity', '0');
+    //关闭顶部广告（jquery版）
+    $('#closead').click(function () {
+        $('.topad').fadeOut();
     });
 
     var listener;
     //判断浏览器是否支持某事件
-    if('onmouseenter' in window)
+    if ('onmouseenter' in window)
         listener = 'mouseenter';
     else
         listener = 'mouseover';
 
     //mouseenter：只有在鼠标进入时触发（低版本浏览器不支持）
-    document.getElementById('mycart').addEventListener(listener, requestCart);
+    $('#mycart').on(listener, requestCart);
 });
 
 //请求购物车
 function requestCart() {
-    var dropDownCart = document.getElementById('dropdowncart');
-    dropDownCart.innerHTML = '';
-    $(dropDownCart).addClass('lazyload');
+    var dropDownCart = $('#dropdowncart');
+
+    dropDownCart.html('');
+    dropDownCart.addClass('lazyload');
 
     $.ajax({
         type: 'GET',
         url: 'http://www.google.com',
-        //url: 'test.txt',
+        // url: 'test.txt',
         data: {username: '123', password: '456'},
         timeout: 3000,
         success: function (data) {
-            dropDownCart.innerHTML = data;
+            dropDownCart.html(data);
         },
         error: function () {
-            dropDownCart.innerHTML = '购物车中还没有商品，赶紧选购吧！';
+            dropDownCart.html('购物车中还没有商品，赶紧选购吧！');
         },
         complete: function () {
-            $(dropDownCart).removeClass('lazyload');
+            dropDownCart.removeClass('lazyload');
         }
     });
 }
@@ -137,21 +132,13 @@ function requestCart() {
 function scroll() {
     var index = $(this).parent().index();
     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
-    //可以直接设置scrollTop控制滚动条
-    intervalScroll = setInterval(function () {
-        //一定要是闭区间，不让滚动条的位置在边界上
-        if (scrollTop >= 1300 + index * 100) {
-            scrollTop = scrollTop - 20;
-            window.scrollTo(0, scrollTop);
-        }
-        else if (scrollTop <= 1200 + index * 100) {
-            scrollTop = scrollTop + 20;
-            window.scrollTo(0, scrollTop);
-        }
-        else {
-            clearInterval(intervalScroll);
-        }
-    }, 1);
+
+    var st;
+    if (scrollTop >= 1300 + index * 100)
+        st = 1300 + index * 100 - 20;
+    else if (scrollTop <= 1200 + index * 100)
+        st = 1200 + index * 100 + 20;
+    $('body, html').animate({scrollTop: st}, 500);
 }
 
 //滚动条滚动相关显示/隐藏
@@ -160,14 +147,15 @@ function scrolling() {
     showOrHide(scrollTop);
 
     //左侧导航栏随滚动条滚动样式
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 11; i++) {
         var start = 1200 + i * 100;
         var end = start + 100;
         if (scrollTop > start && scrollTop < end) {
             //清楚动态样式，使静态样式生效
-            $('.leftbar li').not(':last-child').css({'background-color': '', 'border-top': ''});
-            $('.leftbar li').not(':last-child').next().css('border-top', '');
-
+            $('.leftbar li').not(':last-child').attr('style', '');
+            $('.leftbar li').not(':last-child').next().attr('style', '');
+            if (i == 10)
+                break;
             $('.leftbar li:eq(' + i + ')').css({'background-color': '#d70b1c', 'border-top': '1px solid #d70b1c'});
             $('.leftbar li:eq(' + i + ')').next().css('border-top', '1px solid #d70b1c');
             break;
@@ -239,9 +227,6 @@ function showOrHide(scrollTop) {
 
                 //初始滑动标签处的宽度
                 var width_a = $('.middlediv').width() / 5;
-                /*$('.MiddleDiv a').width(width_a);
-                 $('.MiddleDiv a').css('box-sizing', 'border-box');
-                 $('.MiddleDiv i').width(width_a - 16);*/
 
                 //滑动标签
                 $('#sliderul li').on('mouseover', function () {
@@ -353,48 +338,8 @@ function showOrHide(scrollTop) {
 }
 
 function fadeImg() {
-    //测试代码段的执行时间，参数任意，但起始的参数必须相同
-    //console.time('test');
     $('#spotul div:eq(' + imgIndex + ')').trigger('fadeImg');
-    //console.timeEnd('test');
-    //自动累加执行的次数
-    //console.count('第N次执行FadeImg');
 }
-
-//滑动图片，有问题
-//function MoveImg(direction) {
-//    if (direction === 'right') {
-//        $('.AdImg').css('right', '-100%');
-//        $('.PreImg').css('right', '0');
-
-//        $('.PreImg').on('webkitTransitionEnd', function () {
-//            $('.NextImg').remove();
-//            $('.AdImg').attr('class', 'NextImg');
-//            $('.PreImg').attr('class', 'AdImg');
-//            $('.AdImg').before('<img class="PreImg" src="" />');
-
-//            $('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
-//            $('.AdImg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
-//            $('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
-//        });
-//    }
-//    else {
-//        $('.AdImg').css('right', '100%');
-//        $('.NextImg').css('right', '0');
-
-//        $('.NextImg').on('webkitTransitionEnd', function () {
-//            $('.PreImg').remove();
-//            $('.AdImg').attr('class', 'PreImg');
-//            $('.NextImg').attr('class', 'AdImg');
-//            $('.AdImg').after('<img class="NextImg" src="" />');
-
-//            $('.PreImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex - 1) + '.jpg) no-repeat center');
-//            $('.AdImg').css('background', 'url(../images/carousel/ad' + imgIndex + '.jpg) no-repeat center');
-//            $('.NextImg').css('background', 'url(../images/carousel/ad' + adjust(imgIndex + 1) + '.jpg) no-repeat center');
-//        });
-//    }
-
-//}
 
 /**
  *该函数用循环取余的方式将任何数字调节为0~图片数量-1之间的数字
