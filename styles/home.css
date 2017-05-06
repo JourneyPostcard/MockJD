@@ -536,7 +536,6 @@ select, input, img /*,em,b,u,i*/
 .top2-1 > span > input {
     width:508px;
     font-size:14px;
-    /*height:100%;没有用???*/
     height:35px;
     line-height:35px;
     padding-left:5px;
@@ -585,7 +584,6 @@ select, input, img /*,em,b,u,i*/
     display:inline-block;
     min-width:14px;
     line-height:14px;
-    /*behavior:url(../ie-css3.htc);*/
 }
 .top2-1 > span > div > div:first-child + div {
     display:none;
@@ -646,17 +644,17 @@ select, input, img /*,em,b,u,i*/
 .top2-1 ol li:first-child {
     margin-left:30px;
 }
-.top2-1 ol li:nth-child(4n) {
+.top2-1 ol li.li4th {
     margin-right:40px;
 }
-.top2-1 ol li:nth-child(4n):after {
+.top2-1 ol li.li4th:after {
     content:'';
     display:block;
     position:absolute;
     height:15px;
     width:1px;
     top:50%;
-    -webkit-transform:translateY(-50%);
+    margin-top:-7px;
     right:-20px;
     background-color:#ccc;
 }
