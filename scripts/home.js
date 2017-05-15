@@ -151,7 +151,7 @@ function scrolling() {
         var start = 1200 + i * 100;
         var end = start + 100;
         if (scrollTop > start && scrollTop < end) {
-            //清楚动态样式，使静态样式生效
+            //清除动态样式，使静态样式生效
             $('.leftbar li').not(':last-child').attr('style', '');
             $('.leftbar li').not(':last-child').next().attr('style', '');
             if (i == 10)
@@ -269,8 +269,9 @@ function slideImg() {
     $('.leftbtn').on('click', function () {
         //相对值计算时包括静态样式
         var p = $(this).parent().find('p');
+        var _move = $(this).siblings('div').width();
         //使用jquery队列动画，一个执行完后紧接着执行另一个
-        p.animate({left: '-=600px'}, 500);
+        p.animate({left: '-=' + (_move + 30) + 'px'}, 500);
         p.animate({left: '+=30px'}, 100, function () {
             var part1 = $(this).find('a:lt(6)');
             $(this).find('a:last').addClass('tmpclass');
@@ -283,20 +284,21 @@ function slideImg() {
             part1.insertAfter('.tmpclass');
 
             $('.tmpclass').removeClass('tmpclass');
-            $(this).css('left', '-570px');
+            //清除动态样式，使静态样式生效
+            $(this).attr('style', '');
         });
     });
 
     $('.rightbtn').on('click', function () {
-        //相对值计算时包括静态样式
         var p = $(this).parent().find('p');
-        p.animate({left: '+=600px'}, 500);
+        var _move = $(this).siblings('div').width();
+        p.animate({left: '+=' + (_move + 30) + 'px'}, 500);
         p.animate({left: '-=30px'}, 100, function () {
             var part1 = $(this).find('a:gt(17)');
             $(this).find('a:first').addClass('tmpclass');
             part1.insertBefore('.tmpclass');
             $('.tmpclass').removeClass('tmpclass');
-            $(this).css('left', '-570px');
+            $(this).attr('style', '');
         });
     });
 }

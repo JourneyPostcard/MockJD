@@ -90,7 +90,6 @@ select, input, img /*,em,b,u,i*/
 }
 .searchbar p {
     position:absolute;
-    white-space:nowrap;
     top:0;
     left:50%;
     margin-left:-270px;
@@ -1496,7 +1495,6 @@ select, input, img /*,em,b,u,i*/
 .three div {
     display:table;
     margin:0 auto;
-    white-space:nowrap;
     width:1190px;
 }
 .three a {
@@ -2167,8 +2165,11 @@ select, input, img /*,em,b,u,i*/
     .scrollimg > div {
         width:470px;
     }
+    .scrollimg > div > p {
+        left:-470px;
+    }
     .scrollimg > div a {
-        width:78px;
+        width:78.3px;
     }
     .three div {
         width:990px;
